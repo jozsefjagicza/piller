@@ -1,5 +1,7 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:piller/common/styles.dart';
 import 'dart:async';
 
 import 'package:piller/common/widgets/background_widget.dart';
@@ -34,7 +36,14 @@ class SplashScreenState extends State<SplashScreen> {
                 child: child,
               );
             },
-            child: Image.asset('assets/images/logo.png', width: 100, height: 100),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset('assets/images/logo.png', width: 100, height: 100),
+                Text('app_name'.tr(), style: AppTextStyles.headline),
+                Text('applicant_name'.tr(), style: AppTextStyles.subtitle),
+              ],
+            ),
           ),
         ),
       ),

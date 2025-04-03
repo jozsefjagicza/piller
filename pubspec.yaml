@@ -31,9 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  easy_localization: ^3.0.7+1
+
 
 dev_dependencies:
   flutter_test:
@@ -61,3 +61,12 @@ flutter:
   assets:
     - assets/images/
     - assets/
+    - assets/translations/
+
+  fonts:
+    - family: KoHo
+      fonts:
+        - asset: assets/fonts/KoHo-Bold.ttf
+        - asset: assets/fonts/KoHo-ExtraLight.ttf
+        - asset: assets/fonts/KoHo-Light.ttf
+        - asset: assets/fonts/KoHo-Regular.ttf
