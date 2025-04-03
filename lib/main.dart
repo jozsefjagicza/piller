@@ -1,6 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:piller/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
+import 'di/service_locator.dart';
+import 'feature/authentication/login_screen.dart';
 import 'feature/splash/splash_screen.dart';
 
 void main() async {
@@ -8,18 +12,27 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  runApp( EasyLocalization(
-    supportedLocales: [Locale('en'), Locale('hu')],
-    path: 'assets/translations',
-    fallbackLocale: Locale('hu'),
-    child: MyApp(),
-  ));
+  setupLocator();
+
+  runApp(
+      EasyLocalization(
+        supportedLocales: [Locale('en'), Locale('hu')],
+        path: 'assets/translations',
+        fallbackLocale: Locale('hu'),
+        child: MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => locator<AuthProvider>(),
+              ),
+        ],
+        child: MyApp()),
+          )
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +42,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.transparent,
       ),
-      home: AuthHandler(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => LoginScreen(),
+      },
     );
   }
 }

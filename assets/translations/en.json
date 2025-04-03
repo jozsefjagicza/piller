@@ -1,5 +1,7 @@
 
 {
   "app_name": "Test task",
-  "applicant_name": "Jozsef Jagicza"
+  "applicant_name": "Jozsef Jagicza",
+
+  "login_title": "Login"
 }
