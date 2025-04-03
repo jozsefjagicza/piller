@@ -1,27 +1,30 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:piller/interactors/auth_interactor.dart';
 
 class AuthProvider with ChangeNotifier {
-  final AuthInteractor _authInteractor =  locator<AuthInteractor>();
-  final TextEditingController emailController = TextEditingController();
+  final AuthInteractor _authInteractor = locator<AuthInteractor>();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode usernameFocusNode = FocusNode();
   String? _errorText;
   bool _isAuthenticated = false;
+  bool _isLoading = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool get isAuthenticated => _isAuthenticated;
+
   String? get errorText => _errorText;
 
+  bool get isLoading => _isLoading;
+
   AuthProvider() {
-    emailFocusNode.addListener(_onFocusChange);
+    usernameFocusNode.addListener(_onFocusChange);
   }
 
   void _onFocusChange() {
-    if (!emailFocusNode.hasFocus) {
+    if (!usernameFocusNode.hasFocus) {
       _errorText = null;
       notifyListeners();
     }
@@ -29,10 +32,16 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> login() async {
     if (formKey.currentState!.validate()) {
+      _isLoading = true;
+      notifyListeners();
+
       bool result = await _authInteractor.authenticate(
-        emailController.text,
+        usernameController.text,
         passwordController.text,
       );
+
+      _isLoading = false;
+      notifyListeners();
 
       if (result) {
         _isAuthenticated = true;
@@ -44,13 +53,9 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  String? validateEmail(String? value) {
+  String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      _errorText = 'login_validate_empty_email'.tr();
-      return _errorText;
-    }
-    if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}").hasMatch(value)) {
-      _errorText = 'login_validate_email_format'.tr();
+      _errorText = 'login_validate_empty_username'.tr();
       return _errorText;
     }
     return null;
@@ -74,13 +79,5 @@ class AuthProvider with ChangeNotifier {
     } else {
       Navigator.pushReplacementNamed(context, '/home');
     }
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    emailFocusNode.dispose();
-    super.dispose();
   }
 }

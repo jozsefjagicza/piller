@@ -28,13 +28,13 @@ class LoginScreen extends StatelessWidget {
                       Text('login_title'.tr(), style: AppTextStyles.headline),
                       SizedBox(height: UIConstants.largePadding),
                       TextFormField(
-                        controller: authProvider.emailController,
+                        controller: authProvider.usernameController,
                         keyboardType: TextInputType.emailAddress,
-                        focusNode: authProvider.emailFocusNode,
+                        focusNode: authProvider.usernameFocusNode,
                         decoration: InputDecorations.customInputDecoration(
-                          labelText: 'login_email'.tr(),
+                          labelText: 'login_username'.tr(),
                         ),
-                        validator: (value) => authProvider.validateEmail(value),
+                        validator: (value) => authProvider.validateUsername(value),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                       SizedBox(height: UIConstants.defaultPadding),
@@ -49,6 +49,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(height: UIConstants.largePadding),
                       ElevatedButton(
                         onPressed: () async {
+                          if (authProvider.isLoading) return;
                           final messenger = ScaffoldMessenger.of(context);
                           await authProvider.login();
                           if (authProvider.isAuthenticated) {
@@ -63,7 +64,9 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                         style: AppButtonStyles.primary,
-                        child: Text('login_title'.tr()),
+                        child: authProvider.isLoading
+                            ? CircularProgressIndicator()
+                            : Text('login_title'.tr()),
                       ),
                     ],
                   ),
