@@ -5,8 +5,8 @@ import 'package:piller/common/styles.dart';
 import 'dart:async';
 
 import 'package:piller/common/widgets/background_widget.dart';
+import 'package:piller/di/service_locator.dart';
 import 'package:piller/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,8 +20,9 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
+      if(!mounted) return;
       Future.microtask(() =>
-          Provider.of<AuthProvider>(context, listen: false)
+          locator<AuthProvider>()
               .checkAuthStatus(context));
     });
   }

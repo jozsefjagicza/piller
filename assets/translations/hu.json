@@ -3,5 +3,15 @@
   "app_name": "Tesztfeladat",
   "applicant_name": "Jagicza József",
 
-  "login_title": "Bejelentkezés"
+  "login_title": "Bejelentkezés",
+  "login_email": "E-mail cím",
+  "login_password": "Jelszó",
+  "login_validate_empty_email": "Kérjük, adja meg az e-mail címét",
+  "login_validate": "Hibás email cím vagy jelszó",
+  "login_validate_email_format": "Kérjük, adjon meg egy érvényes e-mail címet",
+  "login_validate_empty_password": "Kérjük, adja meg a jelszavát",
+  "login_validate_short_password": "A jelszónak legalább 6 karakter hosszúnak kell lennie",
+  "login_failed": "Hiba a bejelentkezés során",
+  "login_success": "Sikeres bejelentkezés"
+
 }

@@ -1,8 +1,7 @@
 
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:piller/common/styles.dart';
 
 class FontWeights {
   static const FontWeight extraLight = FontWeight.w200;
@@ -24,3 +23,45 @@ class UIConstants {
   static const double radius = 12.0;
 
 }
+
+class InputDecorations {
+  static InputDecoration customInputDecoration({required String labelText}) {
+    return InputDecoration(
+      labelText: labelText,
+      labelStyle: AppTextStyles.bodyText,
+      hintText: labelText,
+      hintStyle: AppTextStyles.bodyText,
+      filled: true,
+      fillColor: Colors.white.withAlpha(140),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+        borderSide: const BorderSide(
+          color: Colors.black26,
+          width: 0.5,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+        borderSide: BorderSide(
+          color: AppColors.primaryColor,
+          width: 0.5,
+        ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+        borderSide: const BorderSide(
+          color: Colors.red,
+          width: 0.5,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+        borderSide: const BorderSide(
+          color: Colors.red,
+          width: 0.5,
+        ),
+      ),
+    );
+  }
+}
+
