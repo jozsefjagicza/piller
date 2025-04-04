@@ -20,7 +20,7 @@ class AppColors {
 class UIConstants {
   static const double defaultPadding = 16.0;
   static const double largePadding = 32.0;
-  static const double radius = 8.0;
+  static const double radius = 5.0;
 
 }
 

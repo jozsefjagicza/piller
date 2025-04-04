@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:piller/common/constants.dart';
 import 'package:piller/common/decorations.dart';
 import 'package:piller/common/models/movie.dart';
+import 'package:piller/common/styles.dart';
 
 class MovieItem extends StatelessWidget {
   final Movie movie;
@@ -25,7 +26,7 @@ class MovieItem extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(movie.title, style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(movie.title, style: AppTextStyles.itemTitle),
             Row(
               children: [
                 SizedBox(
@@ -47,7 +48,7 @@ class MovieItem extends StatelessWidget {
                   width: 20,
                   height: 20,
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: AppColors.primaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -59,10 +60,10 @@ class MovieItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 4),
-                Text("${movie.voteCount}", style: TextStyle(fontSize: 12, color: Colors.red)),
+                Text("${movie.voteCount}", style: TextStyle(fontSize: 12, color: AppColors.primaryColor)),
               ],
             ),
-            Text(movie.overview, maxLines: 2, overflow: TextOverflow.ellipsis),
+            Text(movie.overview, maxLines: 2, overflow: TextOverflow.ellipsis, style: AppTextStyles.bodyText),
           ],
         ),
       ),

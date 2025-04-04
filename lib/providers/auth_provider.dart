@@ -8,6 +8,8 @@ class AuthProvider with ChangeNotifier {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode usernameFocusNode = FocusNode();
+  bool obscureText = true;
+
   String? _errorText;
   bool _isAuthenticated = false;
   bool _isLoading = false;

@@ -11,5 +11,9 @@
   "login_validate_empty_password": "Please enter your password",
   "login_validate_short_password": "The password must be at least 6 characters long",
   "login_failed": "Login failed",
-  "login_success": "Login successful"
+  "login_success": "Login successful",
+
+  "movies_title": "Movies",
+  "movies_search": "Search...",
+  "movies_no_results": "No available movies."
 }

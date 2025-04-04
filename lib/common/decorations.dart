@@ -8,7 +8,11 @@ import 'package:piller/common/styles.dart';
 import 'constants.dart';
 
 class InputDecorations {
-  static InputDecoration customInputDecoration({required String labelText}) {
+  static InputDecoration customInputDecoration({
+    required String labelText,
+    bool isSuffix = false,
+    IconButton? suffixIconButton,
+  }) {
     return InputDecoration(
       labelText: labelText,
       labelStyle: AppTextStyles.bodyText,
@@ -17,33 +21,34 @@ class InputDecorations {
       filled: true,
       fillColor: Colors.white.withAlpha(140),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(UIConstants.radius),
         borderSide: const BorderSide(
           color: Colors.black26,
           width: 0.5,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(UIConstants.radius),
         borderSide: BorderSide(
           color: AppColors.primaryColor,
           width: 0.5,
         ),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(UIConstants.radius),
         borderSide: const BorderSide(
           color: Colors.red,
           width: 0.5,
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(UIConstants.radius),
         borderSide: const BorderSide(
           color: Colors.red,
           width: 0.5,
         ),
       ),
+      suffixIcon: isSuffix ? suffixIconButton : null,
     );
   }
 }

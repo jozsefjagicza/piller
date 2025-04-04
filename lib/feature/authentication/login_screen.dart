@@ -8,8 +8,20 @@ import 'package:piller/common/styles.dart';
 import 'package:piller/common/widgets/background_widget.dart';
 import 'package:piller/providers/auth_provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => LoginScreenState();
+}
+
+class LoginScreenState extends State<LoginScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +53,21 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(height: UIConstants.defaultPadding),
                       TextFormField(
                         controller: authProvider.passwordController,
-                        obscureText: true,
+                        obscureText: authProvider.obscureText,
                         decoration: InputDecorations.customInputDecoration(
                           labelText: 'login_password'.tr(),
+                          isSuffix: true,
+                          suffixIconButton: IconButton(
+                            icon: Icon(
+                              authProvider.obscureText ? Icons.visibility : Icons.visibility_off,
+                              color: AppColors.primaryColor,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                authProvider.obscureText = !authProvider.obscureText;
+                              });
+                            },
+                          ),
                         ),
                         validator: (value) => authProvider.validatePassword(value),
                       ),
@@ -68,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                         },
                         style: AppButtonStyles.primary,
                         child: authProvider.isLoading
-                            ? CircularProgressIndicator()
+                            ? CircularProgressIndicator(color: Colors.white)
                             : Text('login_title'.tr()),
                       ),
                     ],

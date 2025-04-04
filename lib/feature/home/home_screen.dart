@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:piller/common/constants.dart';
 import 'package:piller/common/decorations.dart';
@@ -36,8 +37,33 @@ class HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top:50.0, bottom: UIConstants.defaultPadding),
-                child: Text("MOVIES", style: AppTextStyles.headline),
+                padding: const EdgeInsets.only(
+                  top: 50.0,
+                  bottom: UIConstants.defaultPadding,
+                  left: UIConstants.defaultPadding,
+                  right: UIConstants.defaultPadding,
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 48),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          "movies_title".tr(),
+                          style: AppTextStyles.headline,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      iconSize: 30,
+                      icon: const Icon(Icons.favorite),
+                      color: AppColors.primaryColor,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/home/favorite');
+                      },
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: UIConstants.defaultPadding),
@@ -47,7 +73,7 @@ class HomeScreenState extends State<HomeScreen> {
                     provider.searchMovies(query);
                   },
                   decoration: InputDecorations.customInputDecoration(
-                    labelText: 'Keresés...',
+                    labelText: 'movies_search'.tr(),
                   ),
                 ),
               ),
@@ -55,11 +81,11 @@ class HomeScreenState extends State<HomeScreen> {
                 child: Consumer<HomeProvider>(
                   builder: (context, provider, child) {
                     if (provider.isLoading) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
                     }
 
                     if (provider.filteredMovies.isEmpty) {
-                      return Center(child: Text('Nincsenek elérhető filmek.'));
+                      return Center(child: Text('movies_no_results'.tr(), style: AppTextStyles.itemTitle,));
                     }
 
                     return ListView.builder(
