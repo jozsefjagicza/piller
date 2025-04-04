@@ -20,48 +20,7 @@ class AppColors {
 class UIConstants {
   static const double defaultPadding = 16.0;
   static const double largePadding = 32.0;
-  static const double radius = 12.0;
+  static const double radius = 8.0;
 
-}
-
-class InputDecorations {
-  static InputDecoration customInputDecoration({required String labelText}) {
-    return InputDecoration(
-      labelText: labelText,
-      labelStyle: AppTextStyles.bodyText,
-      hintText: labelText,
-      hintStyle: AppTextStyles.bodyText,
-      filled: true,
-      fillColor: Colors.white.withAlpha(140),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
-        borderSide: const BorderSide(
-          color: Colors.black26,
-          width: 0.5,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
-        borderSide: BorderSide(
-          color: AppColors.primaryColor,
-          width: 0.5,
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
-        borderSide: const BorderSide(
-          color: Colors.red,
-          width: 0.5,
-        ),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
-        borderSide: const BorderSide(
-          color: Colors.red,
-          width: 0.5,
-        ),
-      ),
-    );
-  }
 }
 

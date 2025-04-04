@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:piller/common/decorations.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:provider/provider.dart';
 import 'package:piller/common/constants.dart';
 import 'package:piller/common/styles.dart';
 import 'package:piller/common/widgets/background_widget.dart';
-import 'package:piller/providers/auth_provider.dart'; // Importáljuk a provider-t
+import 'package:piller/providers/auth_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -52,10 +53,12 @@ class LoginScreen extends StatelessWidget {
                           if (authProvider.isLoading) return;
                           final messenger = ScaffoldMessenger.of(context);
                           await authProvider.login();
+
                           if (authProvider.isAuthenticated) {
                             messenger.showSnackBar(
                               SnackBar(content: Text('login_success'.tr())),
                             );
+                            await Future.delayed(Duration(seconds: 3));
                             Navigator.pushReplacementNamed(context, '/home');
                           } else {
                             messenger.showSnackBar(
