@@ -15,7 +15,7 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/home/details', arguments: movie.id);
+        Navigator.pushNamed(context, '/home/details', arguments: movie);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: UIConstants.defaultPadding, vertical: 4),

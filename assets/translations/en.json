@@ -24,5 +24,7 @@
   "movie_language": "Language",
   "movie_rating": "Rating",
   "movie_genres": "Genres",
-  "movie_votes": "votes"
+  "movie_votes": "votes",
+
+  "favorites_title": "Favorites"
 }

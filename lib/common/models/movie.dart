@@ -42,3 +42,4 @@ class Movie {
   String? get posterURL =>
       posterPath != null ? 'https://image.tmdb.org/t/p/w500$posterPath' : null;
 }
+

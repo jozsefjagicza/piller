@@ -35,10 +35,8 @@ class HomeScreenState extends State<HomeScreen> {
     provider.loadMovies(languageCode);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: BackgroundWidget(
           child: Column(

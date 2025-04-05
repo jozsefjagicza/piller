@@ -2,18 +2,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:piller/common/constants.dart';
+import 'package:piller/common/models/movie.dart';
 import 'package:piller/common/models/movie_details.dart';
 import 'package:piller/common/styles.dart';
 import 'package:piller/common/widgets/background_widget.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:piller/feature/movie_details/items/genres_widget.dart';
 import 'package:piller/feature/movie_details/items/movie_quick_info_row.dart';
+import 'package:piller/providers/favorites_provider.dart';
 import 'package:piller/providers/movie_details_provider.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-  final int movieId;
+  final Movie movie;
 
-  const MovieDetailsScreen({Key? key, required this.movieId}) : super(key: key);
+  const MovieDetailsScreen({super.key, required this.movie});
 
   @override
   State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
@@ -22,10 +24,28 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   bool isFavorite = false;
   late Future<MovieDetailsResponse> _movieFuture;
+  final FavoritesProvider _favoritesProvider = locator<FavoritesProvider>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void toggleFavorite() {
     setState(() {
-      isFavorite = !isFavorite;
+        if (isFavorite) {
+          _favoritesProvider.removeFavorite(widget.movie.id.toString());
+        } else {
+          _favoritesProvider.addFavorite(widget.movie);
+        }
+        isFavorite = !isFavorite;
+    });
+  }
+
+  Future<void>_checkFavorite() async {
+    bool favoriteStatus = await _favoritesProvider.isFavorite(widget.movie.id.toString());
+    setState(() {
+      isFavorite = favoriteStatus;
     });
   }
 
@@ -34,14 +54,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     super.didChangeDependencies();
     String languageCode =
         "${Localizations.localeOf(context).languageCode}-${Localizations.localeOf(context).countryCode}";
-    _movieFuture = locator<MovieDetailsProvider>().getMovieDetails(widget.movieId, languageCode);
+    _movieFuture = locator<MovieDetailsProvider>().getMovieDetails(widget.movie.id, languageCode);
+    _checkFavorite();
   }
 
   @override
   Widget build(BuildContext context) {
-    String languageCode =
-        "${Localizations.localeOf(context).languageCode}-${Localizations.localeOf(context).countryCode}";
-
     return BackgroundWidget(
       child: FutureBuilder<MovieDetailsResponse>(
         future: _movieFuture,

@@ -24,5 +24,7 @@
   "movie_language": "Nyelv",
   "movie_rating": "Értékelés",
   "movie_genres": "Műfajok",
-  "movie_votes": "szavazat"
+  "movie_votes": "szavazat",
+
+  "favorites_title": "Kedvencek"
 }

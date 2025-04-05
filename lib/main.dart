@@ -1,23 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:piller/feature/favorites/favorites_screen.dart';
 import 'package:piller/feature/movie_details/movie_details_screen.dart';
 import 'package:piller/providers/auth_provider.dart';
+import 'package:piller/providers/favorites_provider.dart';
 import 'package:piller/providers/home_provider.dart';
+import 'package:piller/providers/movie_details_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'common/constants.dart';
+import 'common/models/movie.dart';
 import 'di/service_locator.dart';
 import 'feature/authentication/login_screen.dart';
 import 'feature/home/home_screen.dart';
 import 'feature/splash/splash_screen.dart';
-import 'firebase_options.dart';
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
 
   setupLocator();
@@ -35,19 +36,30 @@ void main() async {
               ChangeNotifierProvider(
                 create: (_) => locator<HomeProvider>(),
               ),
+              ChangeNotifierProvider(
+                create: (_) => locator<FavoritesProvider>(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => locator<MovieDetailsProvider>(),
+              ),
         ],
         child: MyApp()),
           )
   );
 }
 
+class ObserverUtils {
+  static final RouteObserver<ModalRoute> routeObserver = RouteObserver<PageRoute<void>>();
+}
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       locale: context.locale,
+      navigatorObservers: [ObserverUtils.routeObserver],
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       theme: ThemeData(
@@ -63,11 +75,11 @@ class MyApp extends StatelessWidget {
           case '/home':
             return MaterialPageRoute(builder: (_) => HomeScreen());
           case '/home/favorite':
-            return MaterialPageRoute(builder: (_) => LoginScreen());
+            return MaterialPageRoute(builder: (_) => FavoritesScreen());
           case '/home/details':
-            final movieId = settings.arguments as int;
+            final movie = settings.arguments as Movie;
             return MaterialPageRoute(
-              builder: (_) => MovieDetailsScreen(movieId: movieId),
+              builder: (_) => MovieDetailsScreen(movie: movie),
             );
           default:
             return null;
