@@ -1,7 +1,11 @@
+import 'package:auth_token_generator/auth_token_generator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:piller/common/constants.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:piller/interactors/auth_interactor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthInteractor _authInteractor = locator<AuthInteractor>();
@@ -47,6 +51,7 @@ class AuthProvider with ChangeNotifier {
 
       if (result) {
         _isAuthenticated = true;
+        await _saveToken();
         notifyListeners();
       } else {
         _errorText = 'login_validate'.tr();
@@ -76,11 +81,32 @@ class AuthProvider with ChangeNotifier {
   Future<void> checkAuthStatus(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    if (!_isAuthenticated) {
+    if (!await _isLoggedIn()) {
       Navigator.pushReplacementNamed(context, '/login');
     } else {
       Navigator.pushReplacementNamed(context, '/home');
     }
+  }
+
+  Future<bool> _isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(Global.authToken);
+    bool authenticated = token != null && token.isNotEmpty;
+    _isAuthenticated = authenticated;
+    return authenticated;
+  }
+
+  String _generateToken() {
+    final secretKey = Uuid().toString();
+    final userId = Global.user;
+    final token = AuthTokenGenerator.generateBearerToken(secretKey, userId: userId);
+
+    return token;
+  }
+
+  Future<void> _saveToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Global.authToken, _generateToken());
   }
 }
 

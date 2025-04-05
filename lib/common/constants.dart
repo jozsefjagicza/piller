@@ -6,6 +6,10 @@ import 'package:piller/common/styles.dart';
 class Global {
   static const String baseURL = "https://api.themoviedb.org/3";
   static const String apiKey = '4c563e9e63cb1363f3d537a165670e5a';
+  static const String user = "Piller";
+  static const String password = "PillerPassword";
+  static const String authToken = "auth_token";
+
 }
 
 class FontWeights {
