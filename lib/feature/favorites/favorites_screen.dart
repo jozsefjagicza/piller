@@ -66,7 +66,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> with RouteAware {
             }
 
             if (provider.favoriteMovies.isEmpty) {
-              return Center(child: Text('movies_no_results'.tr(), style: AppTextStyles.itemTitle,));
+              return Center(child: Text('favorites_no_results'.tr(), style: AppTextStyles.itemTitle,));
             }
 
             return ListView.builder(

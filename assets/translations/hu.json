@@ -26,5 +26,6 @@
   "movie_genres": "Műfajok",
   "movie_votes": "szavazat",
 
-  "favorites_title": "Kedvencek"
+  "favorites_title": "Kedvencek",
+  "favorites_no_results": "Nincsenek kedvenc filmek."
 }

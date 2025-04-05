@@ -1,7 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:piller/common/styles.dart';
 
 class Global {
   static const String baseURL = "https://api.themoviedb.org/3";

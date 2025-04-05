@@ -26,5 +26,7 @@
   "movie_genres": "Genres",
   "movie_votes": "votes",
 
-  "favorites_title": "Favorites"
+  "favorites_title": "Favorites",
+  "favorites_no_results": "No favorite movies."
+
 }

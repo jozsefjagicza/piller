@@ -39,72 +39,73 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundWidget(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 50.0,
-                  bottom: UIConstants.defaultPadding,
-                  left: UIConstants.defaultPadding,
-                  right: UIConstants.defaultPadding,
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 48),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          "movies_title".tr(),
-                          style: AppTextStyles.headline,
-                        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 50.0,
+                bottom: UIConstants.defaultPadding,
+                left: UIConstants.defaultPadding,
+                right: UIConstants.defaultPadding,
+              ),
+              child: Row(
+                children: [
+                  SizedBox(width: 48),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        "movies_title".tr(),
+                        style: AppTextStyles.headline,
                       ),
                     ),
-                    IconButton(
-                      iconSize: 30,
-                      icon: const Icon(Icons.favorite),
-                      color: AppColors.primaryColor,
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/home/favorite');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: UIConstants.defaultPadding),
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (query) {
-                    provider.searchMovies(query);
-                  },
-                  decoration: InputDecorations.customInputDecoration(
-                    labelText: 'movies_search'.tr(),
                   ),
+                  IconButton(
+                    iconSize: 30,
+                    icon: const Icon(Icons.favorite),
+                    color: AppColors.primaryColor,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/home/favorite');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: UIConstants.defaultPadding),
+              child: TextField(
+                controller: _searchController,
+                onChanged: (query) {
+                  provider.searchMovies(query);
+                },
+                decoration: InputDecorations.customInputDecoration(
+                  labelText: 'movies_search'.tr(),
                 ),
               ),
-              Expanded(
-                child: Consumer<HomeProvider>(
-                  builder: (context, provider, child) {
-                    if (provider.isLoading) {
-                      return Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
-                    }
+            ),
+            Consumer<HomeProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
+                }
 
-                    if (provider.filteredMovies.isEmpty) {
-                      return Center(child: Text('movies_no_results'.tr(), style: AppTextStyles.itemTitle,));
-                    }
+                if (provider.filteredMovies.isEmpty) {
+                  return Center(child: Text('movies_no_results'.tr(), style: AppTextStyles.itemTitle));
+                }
 
-                    return ListView.builder(
-                      itemCount: provider.filteredMovies.length,
-                      itemBuilder: (context, index) {
-                        return MovieItem(movie: provider.filteredMovies[index]);
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-      )
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: provider.filteredMovies.length,
+                    itemBuilder: (context, index) {
+                      return MovieItem(movie: provider.filteredMovies[index]);
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
+
