@@ -25,7 +25,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> with RouteAware {
   @override
   void initState() {
     provider.loadFavorites();
-
     super.initState();
   }
 
@@ -39,6 +38,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> with RouteAware {
   void didPopNext() {
     super.didPopNext();
     provider.loadFavorites();
+  }
+
+  @override
+  void dispose() {
+    ObserverUtils.routeObserver.unsubscribe(this);
+    super.dispose();
   }
 
   @override
