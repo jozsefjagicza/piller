@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "278254383373",
+    "project_id": "piller-91739",
+    "storage_bucket": "piller-91739.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278254383373:android:fea8ad36330d4c91684044",
+        "android_client_info": {
+          "package_name": "com.example.piller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEs4NhFWIzQ_peHEgIsgSK0-Gz3S81so8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278254383373:android:06d1c0bcf4653fc5684044",
+        "android_client_info": {
+          "package_name": "com.jozsefjagicza.piller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEs4NhFWIzQ_peHEgIsgSK0-Gz3S81so8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

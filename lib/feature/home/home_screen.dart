@@ -26,8 +26,15 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    provider.loadMovies();
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    String languageCode = "${Localizations.localeOf(context).languageCode}-${Localizations.localeOf(context).countryCode}";
+    provider.loadMovies(languageCode);
+  }
+
 
   @override
   Widget build(BuildContext context) {

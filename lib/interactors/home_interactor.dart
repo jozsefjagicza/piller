@@ -2,14 +2,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:piller/common/constants.dart';
 import 'package:piller/common/models/movie.dart';
 
 class HomeInteractor {
-  static const String _apiKey = '4c563e9e63cb1363f3d537a165670e5a';
-  static const String _baseUrl = 'https://api.themoviedb.org/3/movie/popular';
 
-  Future<List<Movie>> fetchMovies() async {
-    final response = await http.get(Uri.parse('$_baseUrl?api_key=$_apiKey&language=hu-HU'));
+  Future<List<Movie>> fetchMovies(String languageCode) async {
+    final response = await http.get(Uri.parse('${Global.baseURL}/movie/popular?api_key=${Global.apiKey}&language=$languageCode'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

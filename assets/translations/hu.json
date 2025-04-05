@@ -2,6 +2,7 @@
 {
   "app_name": "Tesztfeladat",
   "applicant_name": "Jagicza József",
+  "general_error": "Hiba",
 
   "login_title": "Bejelentkezés",
   "login_username": "Felhasználónév",
@@ -15,5 +16,13 @@
 
   "movies_title": "Filmek",
   "movies_search": "Keresés...",
-  "movies_no_results": "Nincsenek elérhető filmek."
+  "movies_no_results": "Nincsenek elérhető filmek.",
+  "no_data_available": "Nincs elérhető adat.",
+
+  "movie_status": "Státusz",
+  "movie_popularity": "Népszerűség",
+  "movie_language": "Nyelv",
+  "movie_rating": "Értékelés",
+  "movie_genres": "Műfajok",
+  "movie_votes": "szavazat"
 }

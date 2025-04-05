@@ -9,9 +9,11 @@ class AppTextStyles {
   static const TextStyle headline = TextStyle(fontFamily: koHoFont, fontSize: 32, fontWeight: FontWeights.bold, color: AppColors.textColor);
   static const TextStyle subtitle = TextStyle(fontFamily: koHoFont, fontSize: 20, fontWeight: FontWeights.regular, color: AppColors.textColor);
   static const TextStyle bodyText = TextStyle(fontFamily: koHoFont, fontSize: 14, fontWeight: FontWeights.light, color: AppColors.textColor);
-  static const TextStyle bodyTextWhite = TextStyle(fontFamily: koHoFont, fontSize: 16, fontWeight: FontWeights.light, color: AppColors.whiteColor);
+  static const TextStyle bodyTextWhite = TextStyle(fontFamily: koHoFont, fontSize: 14, fontWeight: FontWeights.bold, color: AppColors.whiteColor);
   static const TextStyle buttonTitle = TextStyle(fontFamily: koHoFont, fontSize: 20, fontWeight: FontWeights.bold, color: Colors.white);
   static const TextStyle itemTitle = TextStyle(fontFamily: koHoFont, fontSize: 16, fontWeight: FontWeights.bold, color: AppColors.textColor);
+  static const TextStyle itemValue = TextStyle(fontFamily: koHoFont, fontSize: 16, fontWeight: FontWeights.bold, color: AppColors.primaryColor);
+  static const TextStyle voteStyle = TextStyle(fontFamily: koHoFont, fontSize: 16, fontWeight: FontWeights.bold, color: Colors.yellow);
   static const TextStyle bodyTextExtraLight = TextStyle(fontFamily: koHoFont, fontSize: 16, fontWeight: FontWeights.extraLight, color: AppColors.textColor);
   static const TextStyle bodyTextWhiteExtraLight = TextStyle(fontFamily: koHoFont, fontSize: 16, fontWeight: FontWeights.extraLight, color: AppColors.whiteColor);
 }

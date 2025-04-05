@@ -2,6 +2,7 @@
 {
   "app_name": "Test task",
   "applicant_name": "Jozsef Jagicza",
+  "general_error": "Error",
 
   "login_title": "Login",
   "login_username": "Username",
@@ -15,5 +16,13 @@
 
   "movies_title": "Movies",
   "movies_search": "Search...",
-  "movies_no_results": "No available movies."
+  "movies_no_results": "No available movies.",
+  "no_data_available": "No data available.",
+
+  "movie_status": "Status",
+  "movie_popularity": "Popularity",
+  "movie_language": "Language",
+  "movie_rating": "Rating",
+  "movie_genres": "Genres",
+  "movie_votes": "votes"
 }

@@ -1,10 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:piller/common/models/movie.dart';
+import 'package:piller/di/service_locator.dart';
 import 'package:piller/interactors/home_interactor.dart';
 
 class HomeProvider with ChangeNotifier {
-  final HomeInteractor _interactor = HomeInteractor();
+  final HomeInteractor _interactor = locator<HomeInteractor>();
   List<Movie> _movies = [];
   List<Movie> _filteredMovies = [];
   bool isLoading = false;
@@ -12,12 +13,13 @@ class HomeProvider with ChangeNotifier {
   List<Movie> get movies => _movies;
   List<Movie> get filteredMovies => _filteredMovies;
 
-  Future<void> loadMovies() async {
+  Future<void> loadMovies(String languageCode) async {
+    debugPrint("Loading movies with language code: $languageCode");
     isLoading = true;
     notifyListeners();
 
     try {
-      _movies = await _interactor.fetchMovies();
+      _movies = await _interactor.fetchMovies(languageCode);
       _filteredMovies = List.from(_movies);
     } catch (e) {
       _movies = [];
@@ -29,13 +31,11 @@ class HomeProvider with ChangeNotifier {
   }
 
   void searchMovies(String query) {
-    debugPrint("Searching movies with query: $query");
     if (query.isEmpty) {
       _filteredMovies = List.from(_movies);
     } else {
       _filteredMovies = _movies.where((movie) =>
           movie.title.toLowerCase().contains(query.toLowerCase())).toList();
-      debugPrint("Searching movies with query: $_filteredMovies");
     }
     notifyListeners();
   }
