@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:piller/analytics/analytics_service.dart';
 import 'package:piller/common/models/movie.dart';
@@ -10,6 +11,7 @@ class HomeProvider with ChangeNotifier {
   List<Movie> _movies = [];
   List<Movie> _filteredMovies = [];
   bool isLoading = false;
+  String? errorMessage;
 
   List<Movie> get movies => _movies;
   List<Movie> get filteredMovies => _filteredMovies;
@@ -17,6 +19,7 @@ class HomeProvider with ChangeNotifier {
   Future<void> loadMovies(String languageCode) async {
     debugPrint("Loading movies with language code: $languageCode");
     isLoading = true;
+    errorMessage = null;
     notifyListeners();
 
     try {
@@ -26,6 +29,7 @@ class HomeProvider with ChangeNotifier {
     } catch (e) {
       _movies = [];
       _filteredMovies = [];
+      errorMessage = 'movies_load_error'.tr();
       await AnalyticsService.logMovieListFetchFailure(error: 'network_error');
     }
 

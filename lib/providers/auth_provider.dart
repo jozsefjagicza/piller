@@ -13,6 +13,8 @@ class AuthProvider with ChangeNotifier {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode usernameFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
+
   bool obscureText = true;
 
   String? _errorText;
@@ -27,11 +29,19 @@ class AuthProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   AuthProvider() {
-    usernameFocusNode.addListener(_onFocusChange);
+    usernameFocusNode.addListener(_onUsernameFocusChange);
+    passwordFocusNode.addListener(_onPasswordFocusChange);
   }
 
-  void _onFocusChange() {
+  void _onUsernameFocusChange() {
     if (!usernameFocusNode.hasFocus) {
+      _errorText = null;
+      notifyListeners();
+    }
+  }
+
+  void _onPasswordFocusChange() {
+    if (!passwordFocusNode.hasFocus) {
       _errorText = null;
       notifyListeners();
     }

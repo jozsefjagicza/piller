@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:piller/analytics/analytics_service.dart';
 import 'package:piller/common/models/movie.dart';
@@ -7,6 +8,7 @@ import 'package:piller/interactors/favorites_interactor.dart';
 
 class FavoritesProvider extends ChangeNotifier {
   final FavoritesInteractor _favoritesInteractor = locator<FavoritesInteractor>();
+  String? errorMessage;
 
   bool isLoading = false;
   List<Movie> favoriteMovies = [];
@@ -34,10 +36,13 @@ class FavoritesProvider extends ChangeNotifier {
 
   Future<void> loadFavorites() async {
     isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
     favoriteMovies = await _favoritesInteractor.getFavoriteMovies();
     if (favoriteMovies.isNotEmpty) {
     } else {
-      debugPrint('No favorite movies found.');
+      errorMessage = 'favorites_error'.tr();
     }
     isLoading = false;
     notifyListeners();

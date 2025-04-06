@@ -69,6 +69,7 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       validator: (value) => authProvider.validatePassword(value),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                     SizedBox(height: UIConstants.largePadding),
                     ElevatedButton(

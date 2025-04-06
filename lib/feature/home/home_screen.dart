@@ -104,6 +104,14 @@ class HomeScreenState extends State<HomeScreen> {
                   return Center(child: Text('movies_no_results'.tr(), style: AppTextStyles.itemTitle));
                 }
 
+                if (provider.errorMessage != null) {
+                  return SnackBar(
+                    content: Text(
+                      provider.errorMessage!.tr(),
+                      style: AppTextStyles.itemTitle.copyWith(color: Colors.red),
+                    ),
+                  );
+                }
                 return Expanded(
                   child: ListView.builder(
                     itemCount: provider.filteredMovies.length,

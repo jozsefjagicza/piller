@@ -20,17 +20,20 @@ class FavoritesScreen extends StatefulWidget {
 
 class _FavoritesScreenState extends State<FavoritesScreen> with RouteAware {
 
-  final provider = locator<FavoritesProvider>();
+  late FavoritesProvider provider;
 
   @override
   void initState() {
-    provider.loadFavorites();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    provider = Provider.of<FavoritesProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider.loadFavorites();
+    });
     ObserverUtils.routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
@@ -73,7 +76,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> with RouteAware {
             if (provider.favoriteMovies.isEmpty) {
               return Center(child: Text('favorites_no_results'.tr(), style: AppTextStyles.itemTitle,));
             }
-
+            if (provider.errorMessage != null) {
+              return SnackBar(
+                  content: Text(
+                    provider.errorMessage!.tr(),
+                    style: AppTextStyles.itemTitle.copyWith(color: Colors.red),
+                  ),
+                );
+            }
             return ListView.builder(
               itemCount: provider.favoriteMovies.length,
               itemBuilder: (context, index) {
