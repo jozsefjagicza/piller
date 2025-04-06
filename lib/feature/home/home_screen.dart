@@ -32,6 +32,7 @@ class HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    if(!mounted) return;
     Future.delayed(Duration.zero, () {
       String languageCode = Localizations.localeOf(context).languageCode;
       locator<HomeProvider>().loadMovies(languageCode);
@@ -41,47 +42,38 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: BackgroundWidget(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 50.0,
-                bottom: UIConstants.defaultPadding,
-                left: UIConstants.defaultPadding,
-                right: UIConstants.defaultPadding,
-              ),
-              child: Row(
-                children: [
-                  SizedBox(width: 48),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        "movies_title".tr(),
-                        style: AppTextStyles.headline,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    iconSize: 30,
-                    icon: const Icon(Icons.favorite),
-                    color: AppColors.primaryColor,
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/home/favorite');
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 30,
-                    icon: const Icon(Icons.logout),
-                    color: AppColors.textColor,
-                    onPressed: () {
-                      _showLogoutDialog(context);
-                    },
-                  ),
-                ],
-              ),
+    return BackgroundWidget(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            "movies_title".tr(),
+            style: AppTextStyles.headline,
+          ),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              iconSize: 30,
+              icon: const Icon(Icons.favorite),
+              color: AppColors.primaryColor,
+              onPressed: () {
+                Navigator.pushNamed(context, '/home/favorite');
+              },
             ),
+            IconButton(
+              iconSize: 30,
+              icon: const Icon(Icons.logout),
+              color: AppColors.textColor,
+              onPressed: () {
+                _showLogoutDialog(context);
+              },
+            ),
+          ],
+          centerTitle: true,
+        ),
+        body: Column(
+          children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: UIConstants.defaultPadding),
               child: TextField(
@@ -99,11 +91,11 @@ class HomeScreenState extends State<HomeScreen> {
                 if (provider.isLoading) {
                   return Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
                 }
-
+      
                 if (provider.filteredMovies.isEmpty) {
                   return Center(child: Text('movies_no_results'.tr(), style: AppTextStyles.itemTitle));
                 }
-
+      
                 if (provider.errorMessage != null) {
                   return SnackBar(
                     content: Text(

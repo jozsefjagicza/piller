@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:piller/common/decorations.dart';
-import 'package:piller/di/service_locator.dart';
 import 'package:provider/provider.dart';
 import 'package:piller/common/constants.dart';
 import 'package:piller/common/styles.dart';
@@ -82,6 +81,7 @@ class LoginScreenState extends State<LoginScreen> {
                           messenger.showSnackBar(
                             SnackBar(content: Text('login_success'.tr())),
                           );
+                          if(!mounted) return;
                           await Future.delayed(Duration(seconds: 3));
                           Navigator.pushReplacementNamed(context, '/home');
                         } else {

@@ -48,6 +48,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login() async {
+    _isAuthenticated = false;
     if (formKey.currentState!.validate()) {
       debugPrint("Logging in with username: ${usernameController.text}");
       _isLoading = true;
@@ -67,6 +68,7 @@ class AuthProvider with ChangeNotifier {
         notifyListeners();
       } else {
         _errorText = 'login_validate'.tr();
+        _isAuthenticated = false;
         notifyListeners();
       }
     }
@@ -91,8 +93,6 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> checkAuthStatus(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 2));
-
     if (!await _isLoggedIn()) {
       Navigator.pushReplacementNamed(context, '/login');
     } else {

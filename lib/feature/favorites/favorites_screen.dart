@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:piller/common/constants.dart';
 import 'package:piller/common/styles.dart';
 import 'package:piller/common/widgets/background_widget.dart';
-import 'package:piller/di/service_locator.dart';
 import 'package:piller/feature/home/movie_item.dart';
 import 'package:piller/main.dart';
 import 'package:piller/providers/favorites_provider.dart';
