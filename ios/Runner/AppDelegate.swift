@@ -8,6 +8,7 @@ import UIKit
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+      UserDefaults.standard.set(true, forKey: "FIRAnalyticsDebugEnabled")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

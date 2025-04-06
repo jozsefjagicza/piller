@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:piller/analytics/analytics_service.dart';
 import 'package:piller/common/models/movie.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:piller/interactors/favorites_interactor.dart';
@@ -13,6 +14,7 @@ class FavoritesProvider extends ChangeNotifier {
   Future<void> addFavorite(Movie movie) async {
     if (!await isFavorite(movie.id.toString())) {
       await _favoritesInteractor.addMovieToFavorites(movie);
+      await AnalyticsService.logFavoriteAdded(movieId: movie.id.toString());
       notifyListeners();
     }
   }
@@ -20,6 +22,7 @@ class FavoritesProvider extends ChangeNotifier {
   Future<void> removeFavorite(String movieId) async {
     if (await isFavorite(movieId)) {
       await _favoritesInteractor.removeMovieFromFavorites(movieId);
+      await AnalyticsService.logFavoriteRemoved(movieId: movieId);
       notifyListeners();
     }
   }

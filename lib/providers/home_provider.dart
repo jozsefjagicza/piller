@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:piller/analytics/analytics_service.dart';
 import 'package:piller/common/models/movie.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:piller/interactors/home_interactor.dart';
@@ -21,9 +22,11 @@ class HomeProvider with ChangeNotifier {
     try {
       _movies = await _interactor.fetchMovies(languageCode);
       _filteredMovies = List.from(_movies);
+      await AnalyticsService.logMovieListFetchSuccess();
     } catch (e) {
       _movies = [];
       _filteredMovies = [];
+      await AnalyticsService.logMovieListFetchFailure(error: 'network_error');
     }
 
     isLoading = false;

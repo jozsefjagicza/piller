@@ -1,6 +1,7 @@
 import 'package:auth_token_generator/auth_token_generator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:piller/analytics/analytics_service.dart';
 import 'package:piller/common/constants.dart';
 import 'package:piller/di/service_locator.dart';
 import 'package:piller/interactors/auth_interactor.dart';
@@ -106,7 +107,9 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> _saveToken() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(Global.authToken, _generateToken());
+    String token = _generateToken();
+    await prefs.setString(Global.authToken, token);
+    await AnalyticsService.logTokenSaved(token: token);
   }
 }
 
