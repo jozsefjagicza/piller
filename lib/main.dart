@@ -30,19 +30,19 @@ void main() async {
         fallbackLocale: Locale('hu'),
         child: MultiProvider(
             providers: [
-              ChangeNotifierProvider(
-                create: (_) => locator<AuthProvider>(),
+              ChangeNotifierProvider.value(
+                value: locator<AuthProvider>(),
               ),
-              ChangeNotifierProvider(
-                create: (_) => locator<HomeProvider>(),
+              ChangeNotifierProvider.value(
+                value: locator<HomeProvider>(),
               ),
-              ChangeNotifierProvider(
-                create: (_) => locator<FavoritesProvider>(),
+              ChangeNotifierProvider.value(
+                value: locator<FavoritesProvider>(),
               ),
-              ChangeNotifierProvider(
-                create: (_) => locator<MovieDetailsProvider>(),
+              ChangeNotifierProvider.value(
+                value: locator<MovieDetailsProvider>(),
               ),
-        ],
+            ],
         child: MyApp()),
           )
   );

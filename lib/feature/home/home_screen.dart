@@ -6,6 +6,7 @@ import 'package:piller/common/decorations.dart';
 import 'package:piller/common/styles.dart';
 import 'package:piller/common/widgets/background_widget.dart';
 import 'package:piller/di/service_locator.dart';
+import 'package:piller/providers/auth_provider.dart';
 import 'package:piller/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,6 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
 
   final TextEditingController _searchController = TextEditingController();
-  final provider = locator<HomeProvider>();
 
   @override
   void initState() {
@@ -31,12 +31,16 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    String languageCode = "${Localizations.localeOf(context).languageCode}-${Localizations.localeOf(context).countryCode}";
-    provider.loadMovies(languageCode);
+
+    Future.delayed(Duration.zero, () {
+      String languageCode = Localizations.localeOf(context).languageCode;
+      locator<HomeProvider>().loadMovies(languageCode);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: BackgroundWidget(
         child: Column(
@@ -67,6 +71,14 @@ class HomeScreenState extends State<HomeScreen> {
                       Navigator.pushNamed(context, '/home/favorite');
                     },
                   ),
+                  IconButton(
+                    iconSize: 30,
+                    icon: const Icon(Icons.logout),
+                    color: AppColors.textColor,
+                    onPressed: () {
+                      _showLogoutDialog(context);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -75,7 +87,7 @@ class HomeScreenState extends State<HomeScreen> {
               child: TextField(
                 controller: _searchController,
                 onChanged: (query) {
-                  provider.searchMovies(query);
+                  locator<HomeProvider>().searchMovies(query);
                 },
                 decoration: InputDecorations.customInputDecoration(
                   labelText: 'movies_search'.tr(),
@@ -105,6 +117,33 @@ class HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('logout'.tr(), style: AppTextStyles.itemTitle,),
+          content: Text('logout_confirmation'.tr(), style: AppTextStyles.bodyText,),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();  // Close the dialog
+              },
+              child: Text('general_cancel'.tr(), style: AppTextStyles.bodyTextExtraLight,),
+            ),
+            TextButton(
+              onPressed: () {
+                locator<AuthProvider>().logOut();
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+              child: Text('logout'.tr(), style: AppTextStyles.itemValue,),
+            ),
+          ],
+        );
+      },
     );
   }
 

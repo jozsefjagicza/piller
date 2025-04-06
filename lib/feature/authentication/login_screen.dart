@@ -20,89 +20,87 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => locator<AuthProvider>(),
-      child: Consumer<AuthProvider>(
-        builder: (context, authProvider, child) {
-          return Scaffold(
-            body: BackgroundWidget(
-              child: Padding(
-                padding: EdgeInsets.all(UIConstants.defaultPadding),
-                child: Form(
-                  key: authProvider.formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('login_title'.tr(), style: AppTextStyles.headline),
-                      SizedBox(height: UIConstants.largePadding),
-                      TextFormField(
-                        controller: authProvider.usernameController,
-                        keyboardType: TextInputType.emailAddress,
-                        focusNode: authProvider.usernameFocusNode,
-                        decoration: InputDecorations.customInputDecoration(
-                          labelText: 'login_username'.tr(),
-                        ),
-                        validator: (value) => authProvider.validateUsername(value),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-                      SizedBox(height: UIConstants.defaultPadding),
-                      TextFormField(
-                        controller: authProvider.passwordController,
-                        obscureText: authProvider.obscureText,
-                        decoration: InputDecorations.customInputDecoration(
-                          labelText: 'login_password'.tr(),
-                          isSuffix: true,
-                          suffixIconButton: IconButton(
-                            icon: Icon(
-                              authProvider.obscureText ? Icons.visibility : Icons.visibility_off,
-                              color: AppColors.primaryColor,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                authProvider.obscureText = !authProvider.obscureText;
-                              });
-                            },
-                          ),
-                        ),
-                        validator: (value) => authProvider.validatePassword(value),
-                      ),
-                      SizedBox(height: UIConstants.largePadding),
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (authProvider.isLoading) return;
-                          final messenger = ScaffoldMessenger.of(context);
-                          await authProvider.login();
 
-                          if (authProvider.isAuthenticated) {
-                            messenger.showSnackBar(
-                              SnackBar(content: Text('login_success'.tr())),
-                            );
-                            await Future.delayed(Duration(seconds: 3));
-                            Navigator.pushReplacementNamed(context, '/home');
-                          } else {
-                            messenger.showSnackBar(
-                              SnackBar(content: Text('login_failed'.tr())),
-                            );
-                          }
-                        },
-                        style: AppButtonStyles.primary,
-                        child: authProvider.isLoading
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text('login_title'.tr()),
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        return Scaffold(
+          body: BackgroundWidget(
+            child: Padding(
+              padding: EdgeInsets.all(UIConstants.defaultPadding),
+              child: Form(
+                key: authProvider.formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('login_title'.tr(), style: AppTextStyles.headline),
+                    SizedBox(height: UIConstants.largePadding),
+                    TextFormField(
+                      controller: authProvider.usernameController,
+                      keyboardType: TextInputType.emailAddress,
+                      focusNode: authProvider.usernameFocusNode,
+                      decoration: InputDecorations.customInputDecoration(
+                        labelText: 'login_username'.tr(),
                       ),
-                    ],
-                  ),
+                      validator: (value) => authProvider.validateUsername(value),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    SizedBox(height: UIConstants.defaultPadding),
+                    TextFormField(
+                      controller: authProvider.passwordController,
+                      obscureText: authProvider.obscureText,
+                      decoration: InputDecorations.customInputDecoration(
+                        labelText: 'login_password'.tr(),
+                        isSuffix: true,
+                        suffixIconButton: IconButton(
+                          icon: Icon(
+                            authProvider.obscureText ? Icons.visibility : Icons
+                                .visibility_off,
+                            color: AppColors.primaryColor,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              authProvider.obscureText = !authProvider.obscureText;
+                            });
+                          },
+                        ),
+                      ),
+                      validator: (value) => authProvider.validatePassword(value),
+                    ),
+                    SizedBox(height: UIConstants.largePadding),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (authProvider.isLoading) return;
+                        final messenger = ScaffoldMessenger.of(context);
+                        await authProvider.login();
+
+                        if (authProvider.isAuthenticated) {
+                          messenger.showSnackBar(
+                            SnackBar(content: Text('login_success'.tr())),
+                          );
+                          await Future.delayed(Duration(seconds: 3));
+                          Navigator.pushReplacementNamed(context, '/home');
+                        } else {
+                          messenger.showSnackBar(
+                            SnackBar(content: Text('login_failed'.tr())),
+                          );
+                        }
+                      },
+                      style: AppButtonStyles.primary,
+                      child: authProvider.isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text('login_title'.tr()),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

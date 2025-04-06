@@ -39,6 +39,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> login() async {
     if (formKey.currentState!.validate()) {
+      debugPrint("Logging in with username: ${usernameController.text}");
       _isLoading = true;
       notifyListeners();
 
@@ -97,6 +98,10 @@ class AuthProvider with ChangeNotifier {
     return authenticated;
   }
 
+  Future<void> logOut() async {
+    await _removeToken();
+  }
+
   String _generateToken() {
     final secretKey = Uuid().toString();
     final userId = Global.user;
@@ -110,6 +115,11 @@ class AuthProvider with ChangeNotifier {
     String token = _generateToken();
     await prefs.setString(Global.authToken, token);
     await AnalyticsService.logTokenSaved(token: token);
+  }
+
+  Future<void> _removeToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(Global.authToken);
   }
 }
 

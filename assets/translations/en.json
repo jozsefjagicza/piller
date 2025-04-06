@@ -3,6 +3,7 @@
   "app_name": "Test task",
   "applicant_name": "Jozsef Jagicza",
   "general_error": "Error",
+  "general_cancel": "Cancel",
 
   "login_title": "Login",
   "login_username": "Username",
@@ -13,6 +14,9 @@
   "login_validate_short_password": "The password must be at least 6 characters long",
   "login_failed": "Login failed",
   "login_success": "Login successful",
+
+  "logout": "Logout",
+  "logout_confirmation": "Are you sure you want to log out?",
 
   "movies_title": "Movies",
   "movies_search": "Search...",

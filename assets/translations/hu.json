@@ -3,6 +3,7 @@
   "app_name": "Tesztfeladat",
   "applicant_name": "Jagicza József",
   "general_error": "Hiba",
+  "general_cancel": "Mégsem",
 
   "login_title": "Bejelentkezés",
   "login_username": "Felhasználónév",
@@ -13,6 +14,9 @@
   "login_validate_short_password": "A jelszónak legalább 6 karakter hosszúnak kell lennie",
   "login_failed": "Hiba a bejelentkezés során",
   "login_success": "Sikeres bejelentkezés",
+
+  "logout": "Kijelentkezés",
+  "logout_confirmation": "Biztosan ki szeretne jelentkezni?",
 
   "movies_title": "Filmek",
   "movies_search": "Keresés...",
